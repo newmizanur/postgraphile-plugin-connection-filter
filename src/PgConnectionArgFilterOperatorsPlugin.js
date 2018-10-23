@@ -133,6 +133,18 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
+      "intersection",
+      "Checks array items contains at antoher array",
+      fieldType => fieldType,
+      (identifier, val) => {
+          return sql.query`${identifier} && ${val}`;
+      },
+      {
+
+          allowedListTypes: ["NonList", "List"],
+      }
+    );
+    addConnectionFilterOperator(
       "in",
       "Included in the specified list.",
       fieldType => new GraphQLList(new GraphQLNonNull(fieldType)),
