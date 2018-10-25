@@ -20,6 +20,18 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
+      "userCountry",
+      "Get Items by user country.",
+      () => GraphQLBoolean,
+      (identifier, val) => {
+          return sql.query`${identifier} LIKE auth_public.user_country()`;
+      },
+      {
+
+          allowedListTypes: ["NonList", "List"],
+      }
+  );
+    addConnectionFilterOperator(
       "equalTo",
       "Equal to the specified value.",
       fieldType => fieldType,
